@@ -8,23 +8,21 @@
 
 [Provide a brief overview (3–5 sentences) of the project: what archaeological context is being studied, what biological material is analyzed (e.g. ancient DNA from human/faunal/plant remains), the geographic and chronological scope in Luxembourg, and why this study matters — e.g. its contribution to regional archaeogenetics, population history, biodiversity, or agricultural history.]
 
-**Site:** [Site name, region/municipality, Luxembourg]
+**Site:** INRA
 **Period:** [e.g. Neolithic / Bronze Age / Roman / Medieval — insert chronological range]
-**Sample type:** [e.g. human skeletal remains, seeds, animal bone, sediment]
+**Sample type:** Grapevine seeds - Type will be  seen soon
 
 ---
 
 ## Aim and Objectives
 
 **Aim:**
-[One overarching sentence describing the main research aim.]
 
 **Objectives:**
-1. [Objective 1 — e.g. reconstruct genetic ancestry/diversity of the studied samples]
-2. [Objective 2 — e.g. assess preservation/authenticity of ancient DNA]
-3. [Objective 3 — e.g. compare findings to regional/temporal reference datasets]
-4. [Objective 4 — e.g. produce outputs relevant to archaeological/conservation stakeholders]
-5. [Add/remove as needed]
+1. [A bibliographic review of recent research on ancient grape seed DNA analysis and grapevine genetics in Europe.]
+2. [A summary of the latest findings in this field, written for a non-specialist archaeological audience (including reflections on what data from Luxembourg sites could contribute).]
+3. [A practical guide for the conservation of waterlogged grape seeds and the preservation of ancient DNA (recommendations for best practices).]
+
 
 ---
 
@@ -49,9 +47,9 @@
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| [e.g. FastQC] | [ ] | Raw read quality control |
-| [e.g. AdapterRemoval / fastp] | [ ] | Adapter trimming, quality filtering |
-| [e.g. BWA / bwa-mem2] | [ ] | Read alignment to reference |
+| [Zotero] | [9.0.5] | Bibliographic review |
+| [ArcGIS] | [3.7] | Paleogenetic Archaeological Mapping |
+| [Positron] | [2026.01.0] | Coding software |
 | [e.g. samtools] | [ ] | BAM processing/filtering |
 | [e.g. MapDamage2] | [ ] | aDNA damage pattern assessment |
 | [e.g. ANGSD / PMDtools] | [ ] | Genotype likelihoods, damage-aware calling |
@@ -124,7 +122,7 @@ conda activate [env-name]
 
 | Phase | Task | Period |
 |-------|------|--------|
-| Phase 1 | Sample collection / access to excavation material | [ ] |
+| Phase 1 | Bibliographic review | [2 weeks] |
 | Phase 2 | DNA extraction and library preparation | [ ] |
 | Phase 3 | Sequencing | [ ] |
 | Phase 4 | Bioinformatic preprocessing and alignment | [ ] |
