@@ -19,9 +19,9 @@
 **Aim:**
 
 **Objectives:**
-1. [A bibliographic review of recent research on ancient grape seed DNA analysis and grapevine genetics in Europe.]
-2. [A summary of the latest findings in this field, written for a non-specialist archaeological audience (including reflections on what data from Luxembourg sites could contribute).]
-3. [A practical guide for the conservation of waterlogged grape seeds and the preservation of ancient DNA (recommendations for best practices).]
+1. A bibliographic review of recent research on ancient grape seed DNA analysis and grapevine genetics in Europe.
+2. A summary of the latest findings in this field, written for a non-specialist archaeological audience (including reflections on what data from Luxembourg sites could contribute).
+3. A practical guide for the conservation of waterlogged grape seeds and the preservation of ancient DNA (recommendations for best practices).
 
 
 ---
