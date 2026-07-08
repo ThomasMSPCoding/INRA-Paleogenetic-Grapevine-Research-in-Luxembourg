@@ -6,7 +6,7 @@
 
 ## Description
 
-[Provide a brief overview (3–5 sentences) of the project: what archaeological context is being studied, what biological material is analyzed (e.g. ancient DNA from human/faunal/plant remains), the geographic and chronological scope in Luxembourg, and why this study matters — e.g. its contribution to regional archaeogenetics, population history, biodiversity, or agricultural history.]
+This project applies ancient DNA analysis to archaeological grape seeds (still unknown) recovered from sites across Luxembourg, tracing the genetic history of grapevine cultivation in the region from antiquity through the roman period. Waterlogged and uncharred/charred pips are used to reconstruct ancestry, domestication status, and clonal propagation patterns, situating Luxembourg within the broader picture of viticulture and trade across Western Europe. By combining palaeogenomic methods with archaeobotanical context, the study aims to clarify how local grapevine populations relate to wild European lineages and historically documented cultivars, filling a regional gap in a research landscape currently dominated by French, Italian, and Iberian datasets. 
 
 **Site:** INRA
 **Period:** [e.g. Neolithic / Bronze Age / Roman / Medieval — insert chronological range]
