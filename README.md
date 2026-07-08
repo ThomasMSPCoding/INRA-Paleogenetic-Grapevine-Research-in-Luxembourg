@@ -23,6 +23,19 @@
 2. A summary of the latest findings in this field, written for a non-specialist archaeological audience (including reflections on what data from Luxembourg sites could contribute).
 3. A practical guide for the conservation of waterlogged grape seeds and the preservation of ancient DNA (recommendations for best practices).
 
+**Research Questions:**
+1.	In the sense of preservation of ancient DNA (aDNA), does waterlogged and other types of contamination in pips, be able to recover endogenous content and fragmented reads?
+a.	Assessing if there is endogenous content, fragmented reads distribution, and post-mortem damage (C-T/G-A deamination /water damage in DNA which removes nitrogen and changes the structure of DNA) to look if the material is usable and reproducible data can be managed, which can considered and used for downstream analysis.
+
+2.	Do methods like whole-genome shotgun and/or targeted SNP (Single nucleotides Polymorphism) capture better usable data for poorly preserved pips/fragmented genetic material?
+a.	After building the preservation data/baseline of RQ1, we could compare the two approaches. Shotgun sequencing from Noraz et al., 2026 versus SNP GrapeReSeq capture used by Ramos-Madrigal et al., 2019. This could define the best practice and most cost effective route for reliable genotypes given by the coverage of real expectancy.
+
+3.	What kind of modern ancestry cluster does Luxembourgish pips carry, and does the (paleo)genetic profile fit to the southern-French and Mediterranean pips?
+a.	After building a reliable and stable genotype base from fractured and mutation DNA, we will be assessing the location of the grapevine and can be compared to reference panels (which are already know, e.g. France and Italy). This can be tested whether Luxemburgish viticulture drew on the same Mediterranean lineages (documented in Noraz et al., 2026 and Ramos-Madrigal et al., 2019) or represent another distinct region/location.
+
+4.	Are there any pips that share clonal or first/second degree relatedness from other known sides or periods (Luxembourg wider image of exchange/trade network)?
+a.	With established ancestry, relatedness and clone detection, a possible comparison with French and Mediterranean records could be assessed, but only if the Luxemburgish pips in RQ3 are detected to not only be specific Luxemburgish location.
+
 
 ---
 
