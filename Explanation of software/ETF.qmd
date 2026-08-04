@@ -42,4 +42,66 @@ remotes::install_github("MomX/Momocs")
 Momocs implements this exact algorithm (`efourier()`), plus PCA/MANOVA/LDA on the resulting coefficients, with a consistent grammar throughout (Bonhomme, Picq, Gaucherel & Claude 2014, *J. Stat. Softw.* 56(13)).
 
 ## 3. Input data requirements
-`import_jpg()` expects **binary silhouette images**: the seed as solid black pixels on a white background, one specimen per image, roughly centered.Raw archaeobotanical photographs
+`import_jpg()` expects **binary silhouette images**: the seed as solid black pixels on a white background, one specimen per image, roughly centered.Raw archaeobotanical photographs (RGB, multiple seeds per frame - see section 6)
+
+If you already digitalized (x,y) outline coordinates (e.g. from Fiji or TPS file), skip `import_jpg()` and build the `Out` object directly from a list of coordinate matrices, or use `import_tps()`.
+
+Keep a metadata table(`data.frame` or `.csv`) in the **same row order** as the image list: sampleID,site,chronological phase, preservationInfo (charred/waterlogged), and morphotype/domestication status where known. This becomes the `$fac` slot used for grouping in PCA/MONAVA/LDA, and is what you`ll later join against the aDNA sampleIDs.
+
+## 4. Pipeline
+```{r}
+#| eval: false
+library(Momocs)
+
+# --- Import ---
+jpg.paths <- list.files("data/seed_silhouettes", pattern "\\.jpg$", full.names = TRUE)
+coo.list <- import_jpg(jpg.paths, threshold = 0.5)
+
+meta <- read.csv("data/seed_metadata.csv") #file names are examples pls change them with real data
+seeds <- Out(coo.list, fac = meta)  #check Out for exact arg name in the version
+
+# --- Sanity check of the outlines ---
+panel(seeds, names = TRUE)
+seeds <-coo_check(seeds) # flags/handles malformed outlines (self-intersections, open contours)
+
+# --- How many harmonics? ---
+calibrate_harmonicpower_efourier(seeds, nb.h = 20)  #cumulative power table + plot
+calibrate_reconstruction_efourier(seeds, id = 1, range 1:12) #visual check on one specimen
+
+# --- Elliptic Fourier analysis ---
+# norm = TRUE applies the standard first-harmonic-ellipse normalization(size/rotation/start point)
+seeds.ef <- efourier(seeds, nb.h = 9, smooth.it = 0, norm = TRUE)
+
+# --- PCA on the coefficient matrix ---
+seeds.pca <- PCA(seed.ef)
+plot(seeds.pca, "group")  # replace later "group" with your $fac column name
+PCcontrib(seeds.pca, nax = 1:3) # Contains the 3 PCN axes
+
+# --- Group separation ---
+MANOVA(seeds.pca, "group")
+seeds.lda <- LDA(seeds.ef, "group")
+plot_CV(seeds.lda)
+
+# --- Export for downstream analysis/linking to a DNA sampleIDs ---
+write.csv(as_df(seeds.ef),"outputs/efa_coefficients.csv", row.names = FALSE)
+write.csv(cbind(meta, seeds.pca$x), "output/efa_pca_scores.csv", row.names = FALSE)
+```
+
+# 5. Validation demo (no data required)
+
+Momocs ships a demo `Out`dataset (`bot`, bottle outlines) that runs the full pipleine end-to-end - a fast way to confirm the setup works before pointing it at real seed data:
+
+```{r}
+#| eval: true
+library(Momocs)
+data(bot)
+panel(bot, names = TRUE)
+
+calibrate_harmonicpower_efourier(bot, nb.h = 12)
+
+bot.ef <- efourier(bot, nb.h = 12, norm = TRUE)
+bot.pca <- PCA(bot.ef)
+plot(bot.pca, "type")
+PCcontrib(bot.pca, nax = 1:3)
+MANOVA(bot.pca, "type")
+```
