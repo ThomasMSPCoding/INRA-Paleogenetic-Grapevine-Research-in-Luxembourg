@@ -1,0 +1,33 @@
+---
+title: " Elliptic Fourier Analysis explained and based on Grapevine seeds/pips"
+subtitle:  "INRA paleogenetics grapevine project GMM pipeline (R)"
+format: gfm
+execute:
+    warning: false
+---
+
+## 1. Mathematical background
+A closed 2D contour (seed outline) is treated as a periodic function of arc length length t ∈ [0, T), T = perimeter. x(t) and y(t) are each expanded as separated Fourier series (**Kuhl & Giardina 1982**). Truncating at harmonic N reconstruct the outline as a sum of N ellipses traced at increasing frequency. Harminoc 1 is a single ellipse, harmonic 2 as second ellipse spinning twice as fast, etc...
+
+For a digitized closed contour of K points, with Δx_p, Δy_p, Δt_p the per-segment increments and cumulative arc length t_p:
+
+```
+a_n = (T / 2n²π²) Σ (Δx_p/Δt_p)[cos(2nπt_p/T) − cos(2nπt_{p−1}/T)]
+b_n = (T / 2n²π²) Σ (Δx_p/Δt_p)[sin(2nπt_p/T) − sin(2nπt_{p−1}/T)]
+c_n = (T / 2n²π²) Σ (Δy_p/Δt_p)[cos(2nπt_p/T) − cos(2nπt_{p−1}/T)]
+d_n = (T / 2n²π²) Σ (Δy_p/Δt_p)[sin(2nπt_p/T) − sin(2nπt_{p−1}/T)]
+
+```
+Reconstruction: x(t) = A₀ + Σ[a_n cos(2nπt/T) + b_n sin(2nπt/T)], y(t) analogous with c_n, d_n.
+
+**Normalization** (removes starting point, rotation, size, tracing direction) is done via the first-harmonic ellipse: scale to its semi-major axis onto the x-axis, phase-shift the start point to its tip. After normalization, hamonic 1 carries no shape information; analysis uses harmonic 2...(n). Harmonic count N is chosen from cumulative Fourier power (Σ power_i / Σ_total), typically the smallest N reaching ~99%.
+
+The normalized coefficient vector (4x(N-1) values per specimen) is the shape descriptor. Stacked across specimens -> PCA -> morphospace used to separate morphotypes (wild vs domesticated, cultivar groups, chronological/geographic strata).
+
+## 2. Environment
+
+```{r}
+#| eval: false
+install.packages("Momocs")
+library(Momocs)
+```
