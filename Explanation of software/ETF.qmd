@@ -31,3 +31,15 @@ The normalized coefficient vector (4x(N-1) values per specimen) is the shape des
 install.packages("Momocs")
 library(Momocs)
 ```
+
+If the install doesnt work, follow the next install process,which is more accessible via windows.
+
+```{r}
+install.packages("remotes")
+remotes::install_github("MomX/Momocs")
+```
+
+Momocs implements this exact algorithm (`efourier()`), plus PCA/MANOVA/LDA on the resulting coefficients, with a consistent grammar throughout (Bonhomme, Picq, Gaucherel & Claude 2014, *J. Stat. Softw.* 56(13)).
+
+## 3. Input data requirements
+`import_jpg()` expects **binary silhouette images**: the seed as solid black pixels on a white background, one specimen per image, roughly centered.Raw archaeobotanical photographs
