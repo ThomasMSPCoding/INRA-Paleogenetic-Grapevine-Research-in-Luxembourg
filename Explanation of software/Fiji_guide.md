@@ -76,3 +76,40 @@ Process in this order:
 
 ### 4.8 Export
 **File -> Save As -> jpeg**, one file per specimen. Match the naming convention used in your metadata table from the EFT guide (sampleIDs, site, perservation mode) so `import_jpeg()` out put rows line up with `read.csv("data/seed_metadata.csv")`
+
+## 5. Batch processing 
+For many photos, record a macro once replay it across a folder rather than repeating section 4-4.6 by hand.
+
+**Plugins -> Macros -> Record**, walk through section 4.3-4.6 manually once, than adapt the recorded code into this:
+
+```javascript
+// Fiji macro: raw seed photo -> cleaned binary silhouette
+input  = getDirectory("Choose input folder");
+output = getDirectory("Choose output folder");
+list   = getFileList(input);
+ 
+for (i = 0; i < list.length; i++) {
+    open(input + list[i]);
+    run("8-bit");
+    setAutoThreshold("Otsu");
+    run("Convert to Mask");
+    run("Fill Holes");
+    run("Despeckle");
+    saveAs("Jpeg", output + list[i]);
+    close();
+}
+```
+
+Run it via **Plugins -> Macro -> Run**, or paste into a new **Plugins -> New -> Macro** window and hit Run. This handles the single-seed-per-photo case end to end. For multi-seed photos, keep the Analyze Particles + crop step (section 4.7) as manual pass; automated particles splitting on irregular archaeological material benefits from a visual check per image rather than a blind batch run.
+
+## 6. Quality control
+- Spot-check a subsample of exported silhouettes: no seeds clipped at the frame edge, no two seeds merged into one blob, outline follows the visible seed boundary without a jagged stair case
+- Log the thresjold method and any manual slider adjustments per session - lightning drift between photograpgy sessions can shift the ideal treshold, and this note lets you explain any batch-to-batch variation later.
+- Keep the raw (unprocessed) photographs archived alongside the silhouettes- reprocessing is only possible if the originals are kept.
+
+## 7. Naming and metadata linkage
+
+Use one consitent stem across photo, silhouette, and metadata rowe.g. `SITE_sampleID_view.jpg` → `LUX014_dorsal.jpg`. The row order (or a matching ID column) in `seed_metadata.csv` from the EFA guide must correspond to the file order `import_jpg()` reads, so decide the convention before processing a full batch, not after.
+---
+ 
+Menu names, dialog layouts, and some default checkbox states (e.g. "Black background") can shift slightly between Fiji/ImageJ releases — if a specific item isn't exactly where described above, it's almost certainly still there under a neighboring menu (Image / Process / Analyze), just check the current version's tooltip or the Fiji changelog rather than assuming the function was removed.
