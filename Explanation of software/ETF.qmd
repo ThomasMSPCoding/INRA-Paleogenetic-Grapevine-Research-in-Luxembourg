@@ -105,3 +105,14 @@ plot(bot.pca, "type")
 PCcontrib(bot.pca, nax = 1:3)
 MANOVA(bot.pca, "type")
 ```
+
+## 6. Adding to real archeaological seed photographs
+
+Raw photos of charred/waterlogged pips are rarely one clean silhouette file. There are two pratical options you can follow:
+
+- **`outlineR`** (`devtools::install_github("yesdavid/outlineR")`) -> It's a wrapper around Momocs + EBImage + imager built specifically for archaeological artefact photos: extracts mutiple outlines from a single image while preserving specimen names, optionally rescaling via a `.tps` file. Designed exactly for this use case.
+
+- Manual route: threshold each photo to a binary mask (EBImage/imager/ImageJ),crop to one seed per file, then `import_jpeg()` as above.
+
+## 7. Caveat: taphonomic distortion
+Charring and waterlogging deform seed shape differently . Do not pool charred and waterlogged specimens as if shape-equivalent -> carry preservation mode as covariate/stratifying factor in `$fac`, and treat cross-preservation comparisons cautiously, consistent with practice in the refernce literature found on zotero.
