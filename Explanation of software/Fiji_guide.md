@@ -28,3 +28,39 @@ Before opening Fiji, the source photo should have:
 -If following the dorsal+lateral view protocol from Bouby et al.,2024, photographed and process each view as separate file, same naming, and suffix.
 
 ## 4. Step-by-step workflow (single image)
+
+### 4.1 Open the image
+**File → Open…** (or drag the file onto the Fiji toolbar).
+
+### 4.2 Set the scale
+**Analyze -> Set Scale...**
+- Draw a straight line along the scale bar first(line tool, then draw), *then* open this dialog -> it pre-fills "Distance in pixels."
+- Enter **Known distance**(e.g. `10`) and **Unit of length** (`mm`)
+- Click **Global** of every photo in the session used the same magnification/camera distance.
+- This applies the calibration to all images opened afterward without repeating the step !!!!!
+
+### 4.3 Convert to 8-bit grayscale
+**Image -> Type -> 8-bit**
+Thresholding works on a single grayscale channel, this discards colour information you don't need for outline extraction.
+
+### 4.4 Treshold
+**Image → Adjust → Threshold…** (`Ctrl+Shift+T`)
+- **Method: Otsu** -> a good default for bimodal seed vs background histogram, try **Default** as a fallback of Otsu clips part of the seed.
+
+- **Dark background: unchecked** -> This assumes the seed is the *darker* object on a *lighter* background (typical setup above). If you backgrund is darker than the seed, check this box instead.
+
+- Watch the red preview overlay, it should hug the seed outline without eating into it or leaving a fringe of background. Nudge the treshold sliders manuallyif the auto value is slightly off.
+
+- Click **Apply** to convert to a binary mask
+
+### 4.5 Chack plarity (black object, white background)
+
+Momocs `import_jpeg()` expects a **black seed silhouette on a white background**. Fiji's binary output can come out inverted depending on the **Black background** setting under **Process -> Binary -> Options...**
+- If your result shows a **white** seed on **black**, either unclick **Blackbackground** in that Options dialog and re-run, or simply invert the current image: **Edit -> Invert**.
+- Confirm visually before moving on - this is the single most common reason `import_jpeg()` silently fails or returns a nonsense outline later.
+
+### 4.6 Cleam up the mask
+Process in this order:
+1. **Process -> Binary -> Fill Holes** -> closes small internal gaps
+2. **Process -> Binary -> Despeckle** -> removes unwanted noises in the image (median filter)
+3. Optional, if edges still look funky: **Process -> Binary -> Open** then **Close** (erosion + dilation pair) to smooth the boundary slightly - use sparingly, this can round off genuine morphological detail like the seed beak, which matters for EFA.
