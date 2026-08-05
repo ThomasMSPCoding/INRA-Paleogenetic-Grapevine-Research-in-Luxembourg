@@ -64,3 +64,15 @@ Process in this order:
 1. **Process -> Binary -> Fill Holes** -> closes small internal gaps
 2. **Process -> Binary -> Despeckle** -> removes unwanted noises in the image (median filter)
 3. Optional, if edges still look funky: **Process -> Binary -> Open** then **Close** (erosion + dilation pair) to smooth the boundary slightly - use sparingly, this can round off genuine morphological detail like the seed beak, which matters for EFA.
+
+## 4.7 Isolate individual specimens ( multiple seeds per photo)
+**Analyze -> Analyze Particles...**
+- **Size**: start around `5-30mm^2` for grapevine pips and adjust after inspecting results
+- **Circularity**: `0.30-1.00` as a starting filter to exclude thin debris/scratches while still keeping the pip's natural elongated, beaked shape
+- Click **Exclude on edges** (drops partially cropped specimens touching the frame border)
+- **Show: Masks**, thick **Add to Manager**
+- If two seeds are touching and get merged into one particle, undo, go back to section 4.6 and add **Process -> Binary -> Watershed** before re-runing Analyze Particles ; it splits touching convex objects at their narrowest connection.
+- Use the **ROI Manager** (now populated) to crop and save each specimen individually: select an ROI -> **Image -> Duplicate...** -> save
+
+### 4.8 Export
+**File -> Save As -> jpeg**, one file per specimen. Match the naming convention used in your metadata table from the EFT guide (sampleIDs, site, perservation mode) so `import_jpeg()` out put rows line up with `read.csv("data/seed_metadata.csv")`
