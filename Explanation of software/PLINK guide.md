@@ -145,3 +145,34 @@ So the division of labour: PLINK for the merge/QC/pruning and a first explorator
 ## 8. Idenity / relatedness (clonal detection)
 
 Because grapevine cultivars are clones, the meaningful question here is **"is this pip a clonal match to another pip, or to a modern cultivars?"** The same reframing from the READ/KIN stage. PLINK givesyou two complementary readouts.
+
+IBD (allele-sharing) with `--genome`:
+
+```bash
+plink --bfile maerged-pruned --genome --allow-extra-chr --out ibd
+# inspect PI_HAT (~proportion IBD), Z0/Z1/Z2 sprt -k10 -gr ibd.genome | head
+```
+- Two samples of the **same clone -> PI_HAT ~ 1, Z2 ~ 1** (reads out as "identical/self"). That's your clonal-identity signal, e.g. an ancient pip matching a still-grown cultivar - the direct analog of the Ramos-Madrigal 2019 result.
+- **Caveat:** `PI_HAT` assumes population allele frequencies and a randomly-mating base population, both violated by grapevine clonal structure. Trust the *extreme*,treat *intermediate* degrees cautiously.
+
+Assumptiom-light alternative - raw identity-by-state distance, which is arguably the cleaner primary tool for pure clone detection:
+
+```bash
+plink --bfile merged_pruned --distance square 1-ibs --allow-extra-chr --out ibs
+# near-zero 1-IBS distance between two samples ⇒ candidate clones
+```
+ 
+Use the IBS distance matrix as the primary clonal-identity call and `--genome` PI_HAT as corroboration.
+ 
+## 9. Export for downstream (smartpca / AdmixTools)
+ 
+F-statistics and projected PCA live in EIGENSOFT/AdmixTools, which want EIGENSTRAT format:
+ 
+```bash
+# PLINK → ped/map, then convertf to EIGENSTRAT
+plink --bfile merged_pruned --recode --allow-extra-chr --out merged_pruned
+# write a convertf par file (PED → EIGENSTRAT) and run:
+convertf -p par.PED.EIGENSTRAT
+```
+ 
+Keep both the PLINK binary set and the EIGENSTRAT set around — you'll move between them constantly.
